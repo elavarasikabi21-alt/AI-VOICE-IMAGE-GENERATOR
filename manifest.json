@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "AI Voice Image Generator",
+  "version": "1.0",
+  "description": "Generate images and voice features using AI.",
+  "action": {
+    "default_popup": "public/popup.html"
+    
+  },
+  "permissions": []
+ 
+}

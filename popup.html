@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Voice & Image Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>AI Voice & Image Generator</h1>
+    <p>Voice → Text → Mood/Language → AI Images → Download/Share</p>
+  </header>
+  <main class="container">
+    <!-- Step 1: Voice/Text Input -->
+    <section id="input-section">
+      <button class="voice-btn" id="mic-btn">🎤 Speak</button>
+      <input type="text" id="text-input" placeholder="Or type your idea here...">
+      <button class="generate-btn" id="generate-btn">Generate</button>
+    </section>
+    
+    <!-- Step 2: Detected Info -->
+    <section id="detected-section">
+      <span id="lang-info"></span>
+      <span id="mood-info"></span>
+    </section>
+    
+    <!-- Step 3: Generated Text Outputs -->
+    <section id="output-section">
+      <div>
+        <strong>Simplified Text:</strong>
+        <span id="simple-text"></span>
+        <button class="tts-btn" id="tts-simple" title="Listen">🔊</button>
+      </div>
+      <div>
+        <strong>Image Prompt:</strong>
+        <span id="img-prompt"></span>
+        <button class="tts-btn" id="tts-prompt" title="Listen">🔊</button>
+      </div>
+      <div>
+        <strong>Alt Text:</strong>
+        <span id="alt-text"></span>
+        <button class="tts-btn" id="tts-alt" title="Listen">🔊</button>
+      </div>
+    </section>
+    
+    <!-- Step 4: Image Grid (Generated/Uploaded) -->
+    <section id="image-section">
+      <label class="upload-label">
+        <input type="file" id="upload-img" accept="image/*">
+        <span class="generate-btn">Upload Image</span>
+      </label>
+      <div class="image-grid" id="image-grid">
+        <!-- Image cards will be inserted here -->
+      </div>
+    </section>
+     <section id="Voice edit">
+    <div class="image-card">
+  <img src="..." alt="...">
+  <button class="voice-edit-btn">🎤 Voice Edit</button>
+  <button class="download-btn">Download</button>
+  <!-- Add caption, TTS, etc. -->
+</div>
+</section>
+    <!-- Step 5: QR Code & Export -->
+    <section class="qr-section">
+      <h3>Share Your Creation</h3>
+      <canvas id="qr-code"></canvas>
+      <br>
+      <input type="text" id="share-link" readonly>
+      <button class="generate-btn" id="copy-link">Copy Link</button>
+    </section>
+    <section class="export-section">
+      <button class="generate-btn" id="export-json">Export JSON</button>
+    </section>
+  </main>
+
+  <script>
+    // Example JS for adding image cards with download and TTS buttons
+    function addImageCard(imageUrl, alt, caption) {
+      const grid = document.getElementById('image-grid');
+      const card = document.createElement('div');
+      card.className = 'image-card';
+      card.innerHTML = `
+        <img src="${imageUrl}" alt="${alt}" class="card-image">
+        <div class="caption"><strong>Caption:</strong>
+          <span>${caption}</span>
+          <button class="tts-btn" onclick="speak('${caption.replace(/'/g,"\\'")}')">🔊</button>
+        </div>
+        <div><strong>Alt Text:</strong>
+          <span>${alt}</span>
+          <button class="tts-btn" onclick="speak('${alt.replace(/'/g,"\\'")}')">🔊</button>
+        </div>
+        <a href="${imageUrl}" download="ai-image.png">
+          <button class="download-btn">Download</button>
+        </a>
+        <!-- Add voice edit and auto-caption buttons as needed -->
+      `;
+      grid.appendChild(card);
+    }
+    function speak(text) {
+      const utter = new window.SpeechSynthesisUtterance(text);
+      window.speechSynthesis.speak(utter);
+    }
+    // Example usage for testing:
+    // addImageCard('https://via.placeholder.com/300', 'A placeholder image', 'Sample Caption');
+  </script>
+</body>
+</html>
